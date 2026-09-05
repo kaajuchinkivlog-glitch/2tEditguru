@@ -1,0 +1,6 @@
+{
+  "name": "EditGuru.in - Vivek Portfolio",
+  "description": "Premium cinematic dark liquid-glass portfolio for Vivek - Professional Creator, Vlogger, Video Editor & Visual Storyteller.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

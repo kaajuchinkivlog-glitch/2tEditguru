@@ -43,7 +43,7 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({ onContactClick }) => {
           <button
             id="cta-contact-me-btn"
             onClick={onContactClick}
-            className="w-full sm:w-auto px-8 sm:px-10 py-3.5 sm:py-4 rounded-full bg-white text-black font-bold text-xs sm:text-sm tracking-widest uppercase hover:bg-white/90 transition-all shadow-xl flex items-center justify-center gap-2.5 group cursor-pointer"
+            className="w-full sm:w-auto min-h-[44px] px-8 sm:px-10 py-3.5 sm:py-4 rounded-full bg-white text-black font-bold text-xs sm:text-sm tracking-widest uppercase hover:bg-white/90 active:scale-95 transition-all shadow-xl flex items-center justify-center gap-2.5 group cursor-pointer"
           >
             <span>CONTACT ME</span>
             <Send className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />

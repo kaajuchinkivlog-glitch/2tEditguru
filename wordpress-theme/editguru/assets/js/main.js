@@ -11,18 +11,33 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     refreshIcons();
 
-    // 2. Sticky Navbar Glass Polish on Scroll
+    // 2. Sticky Navbar Glass Polish on Scroll & Scroll Progress Bar
     const navPill = document.getElementById('main-nav-pill');
-    window.addEventListener('scroll', function () {
-        if (!navPill) return;
-        if (window.scrollY > 40) {
-            navPill.classList.add('bg-black/70', 'border-white/20');
-            navPill.classList.remove('bg-white/5', 'border-white/10');
-        } else {
-            navPill.classList.remove('bg-black/70', 'border-white/20');
-            navPill.classList.add('bg-white/5', 'border-white/10');
+    const scrollProgressBar = document.getElementById('scroll-progress-bar');
+
+    function updateScrollState() {
+        // Update Scroll Progress Bar
+        if (scrollProgressBar) {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+            scrollProgressBar.style.width = Math.min(100, Math.max(0, progress)) + '%';
         }
-    });
+
+        // Update Sticky Navbar
+        if (navPill) {
+            if (window.scrollY > 40) {
+                navPill.classList.add('bg-black/70', 'border-white/20');
+                navPill.classList.remove('bg-white/5', 'border-white/10');
+            } else {
+                navPill.classList.remove('bg-black/70', 'border-white/20');
+                navPill.classList.add('bg-white/5', 'border-white/10');
+            }
+        }
+    }
+
+    window.addEventListener('scroll', updateScrollState, { passive: true });
+    updateScrollState();
 
     // 3. Mobile Navigation Drawer
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
@@ -491,5 +506,16 @@ document.addEventListener('DOMContentLoaded', function () {
         scrollToTopBtn.addEventListener('click', function () {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
+    }
+
+    // 10. Sync Creator Custom Profile Photo
+    try {
+        const savedCustomPhoto = localStorage.getItem('editguru_creator_custom_photo');
+        const wpProfileImg = document.getElementById('wp-creator-profile-img');
+        if (savedCustomPhoto && wpProfileImg) {
+            wpProfileImg.src = savedCustomPhoto;
+        }
+    } catch (e) {
+        // Ignore localStorage error
     }
 });

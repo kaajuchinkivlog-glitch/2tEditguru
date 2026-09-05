@@ -1,19 +1,34 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { ArrowDown, Sparkles, FolderGit2, Send } from 'lucide-react';
+import { ArrowDown, Sparkles, FolderGit2, Send, Youtube, ExternalLink } from 'lucide-react';
 import { HeroVisual } from './HeroVisual';
 
 interface HeroProps {
   onExploreWork: () => void;
   onStartProject: () => void;
   onOpenProject: (id: string) => void;
+  onWatchYouTube?: () => void;
 }
 
 export const Hero: React.FC<HeroProps> = ({
   onExploreWork,
   onStartProject,
   onOpenProject,
+  onWatchYouTube,
 }) => {
+  const handleWatchYouTube = () => {
+    if (onWatchYouTube) {
+      onWatchYouTube();
+    } else {
+      const el = document.getElementById('youtube');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        window.open('https://youtube.com/@nomadvivek?si=lit1luSDOYuDRjHa', '_blank');
+      }
+    }
+  };
+
   return (
     <section
       id="home"
@@ -32,64 +47,115 @@ export const Hero: React.FC<HeroProps> = ({
       </div>
 
       <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 flex flex-col items-center text-center">
-        {/* Small Label with Artistic Flair Eyebrow */}
+        {/* Small Label with Creator Photo & Brand Eyebrow */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-4 sm:mb-6"
+          className="mb-4 sm:mb-6 flex flex-wrap items-center justify-center gap-2 sm:gap-3"
         >
-          <span className="text-[10px] sm:text-xs font-bold tracking-[0.25em] sm:tracking-[0.4em] text-white/50 uppercase">
-            Video Editor • Creator • Storyteller
-          </span>
+          {/* Creator Mini Avatar */}
+          <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 backdrop-blur-md shadow-sm">
+            <img
+              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80"
+              alt="Vivek - Video Editor & Creator"
+              width="20"
+              height="20"
+              loading="eager"
+              decoding="async"
+              className="w-5 h-5 rounded-full object-cover border border-white/40"
+            />
+            <span className="text-[10px] sm:text-xs font-bold tracking-[0.25em] text-white uppercase font-mono">
+              EDITGURU • VIVEK
+            </span>
+          </div>
+
+          <a
+            href="https://youtube.com/@nomadvivek?si=lit1luSDOYuDRjHa"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-600/20 border border-red-500/40 text-red-300 hover:bg-red-600/30 hover:border-red-400/60 transition-all text-[11px] font-mono shadow-sm group min-h-[36px]"
+          >
+            <Youtube className="w-3.5 h-3.5 text-red-400 group-hover:scale-110 transition-transform" />
+            <span>@nomadvivek on YouTube</span>
+            <ExternalLink className="w-2.5 h-2.5 opacity-60 group-hover:opacity-100" />
+          </a>
         </motion.div>
 
-        {/* Main Headline with Artistic Flair Editorial Serif Accent */}
+        {/* Main Headline: Exactly "Creating Stories Through Visuals" */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="text-3xl sm:text-6xl md:text-7xl lg:text-8xl font-light leading-[1.02] sm:leading-[0.95] tracking-tight text-white max-w-5xl"
         >
-          TURNING <span className="font-serif italic font-normal text-white">MOMENTS</span> INTO VISUAL <span className="block">STORIES.</span>
+          CREATING STORIES <span className="font-serif italic font-normal text-white">THROUGH VISUALS</span>
         </motion.h1>
 
-        {/* Supporting Text */}
+        {/* Supporting Description: Exactly "Professional video editing, cinematic storytelling and creative content by Vivek." */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-4 sm:mt-6 text-white/50 text-sm sm:text-lg md:text-xl leading-relaxed max-w-xl font-normal"
+          className="mt-4 sm:mt-6 text-white/70 text-sm sm:text-base md:text-lg leading-relaxed max-w-2xl font-normal"
         >
-          I’m <strong className="text-white font-medium">Vivek</strong>, a visual storyteller who transforms raw footage into cinematic experiences and powerful digital narratives.
+          Professional video editing, cinematic storytelling and creative content by <strong className="text-white font-medium">Vivek</strong>. Crafting viral reels, high-retention YouTube films, music video rhythms, and cinema color grading.
         </motion.p>
 
-        {/* CTA Buttons - Artistic Flair Styling */}
+        {/* The 3 Required Buttons: View Portfolio, Watch YouTube, Contact Me */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
           className="mt-6 sm:mt-10 flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full sm:w-auto"
         >
-          {/* Primary CTA */}
+          {/* Button 1: View Portfolio */}
           <button
-            id="hero-btn-explore-work"
+            id="hero-btn-view-portfolio"
             onClick={onExploreWork}
-            className="w-full sm:w-auto bg-white/10 backdrop-blur-md border border-white/20 px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl hover:bg-white/20 font-bold tracking-tight text-white text-xs sm:text-sm uppercase transition-all shadow-xl flex items-center justify-center gap-2 group cursor-pointer"
+            className="w-full sm:w-auto min-h-[44px] bg-white text-black font-bold tracking-tight px-7 sm:px-8 py-3.5 sm:py-4 rounded-2xl hover:bg-white/90 active:scale-95 text-xs sm:text-sm uppercase transition-all shadow-2xl flex items-center justify-center gap-2 group cursor-pointer"
           >
-            <span>EXPLORE MY WORK</span>
-            <ArrowDown className="w-4 h-4 transition-transform group-hover:translate-y-1" />
+            <span>VIEW PORTFOLIO</span>
+            <ArrowDown className="w-4 h-4 transition-transform group-hover:translate-y-0.5" />
           </button>
 
-          {/* Secondary CTA */}
+          {/* Button 2: Watch YouTube */}
           <button
-            id="hero-btn-start-project"
-            onClick={onStartProject}
-            className="w-full sm:w-auto border border-white/10 px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl hover:bg-white/5 text-white/70 hover:text-white font-normal text-xs sm:text-sm uppercase transition-all flex items-center justify-center gap-2 group cursor-pointer"
+            id="hero-btn-watch-youtube"
+            onClick={handleWatchYouTube}
+            className="w-full sm:w-auto min-h-[44px] bg-white/10 backdrop-blur-md border border-white/20 px-6 sm:px-7 py-3.5 sm:py-4 rounded-2xl hover:bg-white/20 active:scale-95 text-white font-semibold text-xs sm:text-sm uppercase transition-all shadow-xl flex items-center justify-center gap-2 group cursor-pointer"
           >
-            <span>START A PROJECT</span>
-            <Send className="w-3.5 h-3.5 text-white/50 group-hover:text-white transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            <Youtube className="w-4 h-4 text-red-400 group-hover:scale-110 transition-transform" />
+            <span>WATCH YOUTUBE</span>
           </button>
+
+          {/* Button 3: Contact Me */}
+          <button
+            id="hero-btn-contact-me"
+            onClick={onStartProject}
+            className="w-full sm:w-auto min-h-[44px] border border-white/10 bg-white/5 backdrop-blur-md px-6 sm:px-7 py-3.5 sm:py-4 rounded-2xl hover:bg-white/10 active:scale-95 text-white/80 hover:text-white font-medium text-xs sm:text-sm uppercase transition-all flex items-center justify-center gap-2 group cursor-pointer"
+          >
+            <Send className="w-3.5 h-3.5 text-white/50 group-hover:text-white transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            <span>CONTACT ME</span>
+          </button>
+        </motion.div>
+
+        {/* Software Suite Badges */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-6 sm:mt-8 flex flex-wrap items-center justify-center gap-2 max-w-2xl"
+        >
+          {['Premiere Pro', 'After Effects', 'CapCut', 'VN Editor', 'Filmora'].map((tool) => (
+            <span
+              key={tool}
+              className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 text-[11px] sm:text-xs text-white/70 font-mono tracking-tight flex items-center gap-1.5"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-white/60" />
+              {tool}
+            </span>
+          ))}
         </motion.div>
 
         {/* Hero Visual Area (Editing Monitor + 4 Floating Cards) */}

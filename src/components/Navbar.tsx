@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Film, Menu, X, ArrowUpRight, Sparkles, Volume2, VolumeX } from 'lucide-react';
+import { Menu, X, ArrowUpRight, Sparkles } from 'lucide-react';
 
 interface NavbarProps {
   onOpenContact: () => void;
-  audioActive: boolean;
-  toggleAudio: () => void;
+  audioActive?: boolean;
+  toggleAudio?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
   onOpenContact,
-  audioActive,
-  toggleAudio,
 }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -21,7 +19,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     const handleScroll = () => {
       setScrolled(window.scrollY > 40);
 
-      const sections = ['home', 'work', 'about', 'services', 'contact-cta'];
+      const sections = ['home', 'youtube', 'work', 'instagram', 'services', 'about', 'blog', 'faq', 'contact-cta'];
       const scrollPos = window.scrollY + 200;
 
       for (const id of sections) {
@@ -41,11 +39,33 @@ export const Navbar: React.FC<NavbarProps> = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+      window.addEventListener('keydown', handleKeyDown);
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [mobileMenuOpen]);
+
   const navLinks = [
     { label: 'Home', href: '#home' },
-    { label: 'Work', href: '#work' },
-    { label: 'About', href: '#about' },
+    { label: 'YouTube', href: '#youtube' },
+    { label: 'Portfolio', href: '#work' },
     { label: 'Services', href: '#services' },
+    { label: 'About', href: '#about' },
+    { label: 'Blog', href: '#blog' },
+    { label: 'FAQ', href: '#faq' },
     { label: 'Contact', href: '#contact-cta' },
   ];
 
@@ -54,20 +74,26 @@ export const Navbar: React.FC<NavbarProps> = ({
     setMobileMenuOpen(false);
     const target = document.querySelector(href);
     if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
+      const headerOffset = 80;
+      const elementPosition = target.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth',
+      });
     }
   };
 
   return (
-    <header className="fixed top-3 sm:top-6 left-0 right-0 z-50 flex justify-center px-3 sm:px-6 pointer-events-none">
+    <header className="fixed top-2.5 sm:top-5 left-0 right-0 z-50 flex justify-center px-3 sm:px-6 pointer-events-none">
       <motion.nav
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className={`pointer-events-auto w-full max-w-5xl transition-all duration-300 rounded-full px-4 sm:px-8 py-2.5 sm:py-3 flex items-center justify-between shadow-2xl ${
+        className={`pointer-events-auto w-full max-w-5xl transition-all duration-300 rounded-full px-4 sm:px-8 py-2 sm:py-2.5 flex items-center justify-between shadow-2xl ${
           scrolled
-            ? 'bg-white/10 border border-white/15 backdrop-blur-2xl shadow-[0_25px_50px_rgba(0,0,0,0.8)]'
-            : 'bg-white/5 border border-white/10 backdrop-blur-xl'
+            ? 'bg-black/80 border border-white/20 backdrop-blur-2xl shadow-[0_25px_50px_rgba(0,0,0,0.85)]'
+            : 'bg-black/50 border border-white/10 backdrop-blur-xl'
         }`}
       >
         {/* Left Brand */}
@@ -75,18 +101,15 @@ export const Navbar: React.FC<NavbarProps> = ({
           href="#home"
           id="nav-brand-logo"
           onClick={(e) => handleNavClick(e, '#home')}
-          className="flex items-center gap-2 group cursor-pointer"
+          className="flex items-center group cursor-pointer min-h-[44px]"
         >
-          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/10 border border-white/20 flex items-center justify-center transition-transform group-hover:scale-105 shadow-inner">
-            <Film className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white transition-transform group-hover:rotate-12" />
-          </div>
           <div className="flex items-center text-base sm:text-xl font-bold tracking-tighter text-white">
             EDITGURU<span className="text-white/40 font-normal">.IN</span>
           </div>
         </a>
 
         {/* Center Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-6 lg:gap-8 text-sm font-medium text-white/70">
+        <div className="hidden md:flex items-center gap-5 lg:gap-8 text-sm font-medium text-white/70">
           {navLinks.map((link) => {
             const isCurrent =
               activeSection === link.href.replace('#', '') ||
@@ -98,7 +121,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
                 className={`relative py-1 transition-colors hover:text-white ${
-                  isCurrent ? 'text-white' : 'text-white/70'
+                  isCurrent ? 'text-white font-semibold' : 'text-white/70'
                 }`}
               >
                 <span>{link.label}</span>
@@ -116,38 +139,25 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Right Action buttons */}
         <div className="flex items-center gap-2 sm:gap-3">
-          {/* Subtle Audio Atmosphere Toggle */}
-          <button
-            id="ambient-audio-toggle"
-            onClick={toggleAudio}
-            title={audioActive ? 'Mute ambient sound' : 'Unmute cinema atmosphere'}
-            className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white/60 hover:text-white transition-all shadow-sm cursor-pointer"
-          >
-            {audioActive ? (
-              <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white animate-pulse" />
-            ) : (
-              <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-            )}
-          </button>
-
           {/* Let's Work Together CTA (Desktop/Tablet) */}
           <button
             id="nav-cta-work-together"
             onClick={onOpenContact}
-            className="hidden sm:flex relative group overflow-hidden px-4 sm:px-5 py-2 rounded-full bg-white text-black text-xs font-bold hover:bg-white/90 uppercase tracking-widest transition-all shadow-lg hover:shadow-[0_0_25px_rgba(255,255,255,0.3)] items-center gap-1.5 cursor-pointer"
+            className="hidden sm:flex relative group overflow-hidden px-4 sm:px-5 py-2.5 rounded-full bg-white text-black text-xs font-bold hover:bg-white/90 uppercase tracking-widest transition-all shadow-lg hover:shadow-[0_0_25px_rgba(255,255,255,0.3)] items-center gap-1.5 cursor-pointer min-h-[40px]"
           >
             <span>Let's Work Together</span>
             <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </button>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button - 44px min touch target */}
           <button
             id="mobile-menu-toggle"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white cursor-pointer"
-            aria-label="Toggle menu"
+            className="md:hidden w-11 h-11 rounded-full bg-white/5 hover:bg-white/10 active:bg-white/15 border border-white/10 flex items-center justify-center text-white cursor-pointer touch-target transition-all"
+            aria-label="Toggle mobile menu"
+            aria-expanded={mobileMenuOpen}
           >
-            {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </motion.nav>
@@ -155,44 +165,57 @@ export const Navbar: React.FC<NavbarProps> = ({
       {/* Mobile Glass Dropdown Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -10, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -10, scale: 0.98 }}
-            transition={{ duration: 0.2 }}
-            className="pointer-events-auto absolute top-20 left-4 right-4 liquid-glass bg-black/90 backdrop-blur-2xl border-white/15 rounded-3xl p-6 md:hidden shadow-2xl flex flex-col gap-4"
-          >
-            <div className="flex flex-col gap-2">
-              {navLinks.map((link) => (
-                <a
-                  key={link.label}
-                  id={`mobile-nav-${link.label.toLowerCase()}`}
-                  href={link.href}
-                  onClick={(e) => handleNavClick(e, link.href)}
-                  className="px-4 py-3 rounded-xl text-base font-medium text-zinc-300 hover:text-white hover:bg-white/5 transition-all flex items-center justify-between"
-                >
-                  <span>{link.label}</span>
-                  <ArrowUpRight className="w-4 h-4 text-zinc-500" />
-                </a>
-              ))}
-            </div>
+          <>
+            {/* Backdrop for click dismiss */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setMobileMenuOpen(false)}
+              className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 md:hidden pointer-events-auto"
+            />
 
-            <div className="pt-4 border-t border-white/10 flex flex-col gap-3">
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenContact();
-                }}
-                className="w-full py-3 rounded-full bg-white text-black font-semibold text-center hover:bg-zinc-200 transition-colors shadow-lg"
-              >
-                Let's Work Together
-              </button>
-              <div className="flex items-center justify-center gap-2 text-xs text-zinc-400 py-1">
-                <Sparkles className="w-3.5 h-3.5 text-zinc-300" />
-                <span>Available for Q2/Q3 Projects & Retainers</span>
+            <motion.div
+              initial={{ opacity: 0, y: -15, scale: 0.97 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -15, scale: 0.97 }}
+              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              className="pointer-events-auto fixed top-20 left-4 right-4 z-50 liquid-glass bg-neutral-950/95 backdrop-blur-2xl border border-white/20 rounded-3xl p-5 md:hidden shadow-2xl flex flex-col gap-3 max-h-[82vh] overflow-y-auto"
+            >
+              <div className="flex flex-col gap-1">
+                {navLinks.map((link) => (
+                  <a
+                    key={link.label}
+                    id={`mobile-nav-${link.label.toLowerCase()}`}
+                    href={link.href}
+                    onClick={(e) => handleNavClick(e, link.href)}
+                    className="px-4 py-3.5 rounded-2xl text-base font-medium text-white/80 hover:text-white hover:bg-white/10 active:bg-white/20 transition-all flex items-center justify-between touch-target"
+                  >
+                    <span>{link.label}</span>
+                    <ArrowUpRight className="w-4 h-4 text-white/40" />
+                  </a>
+                ))}
               </div>
-            </div>
-          </motion.div>
+
+              <div className="pt-3 border-t border-white/10 flex flex-col gap-3">
+                <button
+                  id="mobile-nav-cta-work"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onOpenContact();
+                  }}
+                  className="w-full min-h-[48px] py-3.5 rounded-2xl bg-white text-black font-bold text-xs uppercase tracking-wider text-center hover:bg-zinc-200 transition-colors shadow-lg cursor-pointer flex items-center justify-center gap-2"
+                >
+                  <span>Let's Work Together</span>
+                  <ArrowUpRight className="w-4 h-4" />
+                </button>
+                <div className="flex items-center justify-center gap-2 text-xs text-white/50 py-1 font-mono-code">
+                  <Sparkles className="w-3.5 h-3.5 text-white/70" />
+                  <span>Available for Q2 / Q3 Retainers & Edits</span>
+                </div>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </header>

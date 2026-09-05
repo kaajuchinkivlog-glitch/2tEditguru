@@ -512,7 +512,8 @@ $default_projects = array(
                 <div class="lg:col-span-5 relative flex flex-col items-center">
                     <div class="relative w-full max-w-[260px] sm:max-w-none sm:w-72 aspect-[3/4] sm:h-96 rounded-3xl overflow-hidden bg-white/5 border border-white/15 p-2 shadow-2xl group">
                         <img
-                            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=80"
+                            id="wp-creator-profile-img"
+                            src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=900&q=80"
                             alt="Vivek - Video Editor & Creator"
                             class="w-full h-full object-cover rounded-2xl grayscale contrast-125 group-hover:grayscale-0 transition-all duration-700"
                         >

@@ -39,6 +39,19 @@ export const ContactModal: React.FC<ContactModalProps> = ({
   const [submitted, setSubmitted] = useState(false);
   const [copied, setCopied] = useState(false);
 
+  // Escape key listener
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   useEffect(() => {
     if (prefilledService) {
       setFormData((prev) => ({ ...prev, service: prefilledService }));
@@ -70,12 +83,16 @@ export const ContactModal: React.FC<ContactModalProps> = ({
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-6 bg-black/85 backdrop-blur-2xl overflow-y-auto">
+      <div
+        className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-6 bg-black/85 backdrop-blur-2xl overflow-y-auto"
+        onClick={onClose}
+      >
         <motion.div
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+          onClick={(e) => e.stopPropagation()}
           className="relative w-full max-w-xl max-h-[94vh] overflow-y-auto bg-neutral-950/95 backdrop-blur-2xl border border-white/10 rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-2xl"
         >
           {/* Header */}
@@ -97,7 +114,8 @@ export const ContactModal: React.FC<ContactModalProps> = ({
             <button
               id="close-contact-modal-btn"
               onClick={onClose}
-              className="w-8 h-8 rounded-full bg-white/5 border border-white/10 hover:border-white/30 flex items-center justify-center text-white/50 hover:text-white transition-colors cursor-pointer"
+              aria-label="Close modal"
+              className="w-9 h-9 rounded-full bg-white/10 border border-white/10 hover:border-white/30 active:bg-white/20 flex items-center justify-center text-white/70 hover:text-white transition-colors cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
@@ -121,7 +139,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
               </p>
 
               {/* Inquiry Summary Box */}
-              <div className="mt-6 p-4 rounded-2xl bg-white/[0.03] border border-white/10 text-left w-full text-xs font-mono-code space-y-1.5 text-zinc-300">
+              <div className="mt-6 p-4 rounded-2xl bg-white/[0.03] border border-white/10 text-left w-full text-xs font-mono space-y-1.5 text-zinc-300">
                 <div>
                   <span className="text-zinc-500">Service:</span> {formData.service}
                 </div>
@@ -141,7 +159,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
               <div className="mt-6 flex items-center gap-3">
                 <button
                   onClick={copyBrief}
-                  className="px-4 py-2 rounded-full liquid-glass-subtle border border-white/15 text-xs text-zinc-300 hover:text-white flex items-center gap-1.5 transition-colors"
+                  className="px-4 py-2.5 rounded-full bg-white/10 border border-white/15 text-xs text-zinc-300 hover:text-white flex items-center gap-1.5 transition-colors min-h-[40px]"
                 >
                   {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
                   <span>{copied ? 'Copied Brief' : 'Copy Brief'}</span>
@@ -151,7 +169,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                     setSubmitted(false);
                     onClose();
                   }}
-                  className="px-6 py-2.5 rounded-full bg-white text-black font-semibold text-xs hover:bg-zinc-200 transition-colors"
+                  className="px-6 py-2.5 rounded-full bg-white text-black font-semibold text-xs hover:bg-zinc-200 transition-colors min-h-[40px]"
                 >
                   Done
                 </button>
@@ -162,7 +180,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
               {/* Name & Email */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-mono-code text-zinc-400 uppercase mb-1">
+                  <label className="block text-xs font-mono text-zinc-400 uppercase mb-1">
                     Your Name *
                   </label>
                   <input
@@ -171,11 +189,11 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="e.g. Marcus Reid"
-                    className="w-full bg-black/60 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-white transition-colors"
+                    className="w-full bg-black/60 border border-white/15 rounded-xl px-3.5 py-3 text-base sm:text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-white transition-colors"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-mono-code text-zinc-400 uppercase mb-1">
+                  <label className="block text-xs font-mono text-zinc-400 uppercase mb-1">
                     Email Address *
                   </label>
                   <input
@@ -184,20 +202,20 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="marcus@example.com"
-                    className="w-full bg-black/60 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-white transition-colors"
+                    className="w-full bg-black/60 border border-white/15 rounded-xl px-3.5 py-3 text-base sm:text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-white transition-colors"
                   />
                 </div>
               </div>
 
               {/* Service Selection */}
               <div>
-                <label className="block text-xs font-mono-code text-zinc-400 uppercase mb-1">
+                <label className="block text-xs font-mono text-zinc-400 uppercase mb-1">
                   Project Category
                 </label>
                 <select
                   value={formData.service}
                   onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                  className="w-full bg-black/60 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-white transition-colors"
+                  className="w-full bg-black/60 border border-white/15 rounded-xl px-3.5 py-3 text-base sm:text-sm text-white focus:outline-none focus:border-white transition-colors"
                 >
                   {servicesList.map((s) => (
                     <option key={s} value={s} className="bg-zinc-900 text-white">
@@ -209,7 +227,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
 
               {/* Footage Link */}
               <div>
-                <label className="block text-xs font-mono-code text-zinc-400 uppercase mb-1">
+                <label className="block text-xs font-mono text-zinc-400 uppercase mb-1">
                   Raw Footage Link (Drive / Dropbox / Frame.io)
                 </label>
                 <div className="relative">
@@ -219,7 +237,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                     value={formData.footageLink}
                     onChange={(e) => setFormData({ ...formData, footageLink: e.target.value })}
                     placeholder="https://drive.google.com/..."
-                    className="w-full bg-black/60 border border-white/15 rounded-xl pl-10 pr-3.5 py-2.5 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-white transition-colors"
+                    className="w-full bg-black/60 border border-white/15 rounded-xl pl-10 pr-3.5 py-3 text-base sm:text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-white transition-colors"
                   />
                 </div>
               </div>
@@ -227,13 +245,13 @@ export const ContactModal: React.FC<ContactModalProps> = ({
               {/* Budget & Timeline */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-mono-code text-zinc-400 uppercase mb-1">
+                  <label className="block text-xs font-mono text-zinc-400 uppercase mb-1">
                     Estimated Budget
                   </label>
                   <select
                     value={formData.budget}
                     onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                    className="w-full bg-black/60 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-white transition-colors"
+                    className="w-full bg-black/60 border border-white/15 rounded-xl px-3.5 py-3 text-base sm:text-sm text-white focus:outline-none focus:border-white transition-colors"
                   >
                     <option value="Under $300" className="bg-zinc-900">Under $300</option>
                     <option value="$300 - $800" className="bg-zinc-900">$300 - $800</option>
@@ -243,13 +261,13 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                 </div>
 
                 <div>
-                  <label className="block text-xs font-mono-code text-zinc-400 uppercase mb-1">
+                  <label className="block text-xs font-mono text-zinc-400 uppercase mb-1">
                     Timeline Target
                   </label>
                   <select
                     value={formData.timeline}
                     onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
-                    className="w-full bg-black/60 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-white transition-colors"
+                    className="w-full bg-black/60 border border-white/15 rounded-xl px-3.5 py-3 text-base sm:text-sm text-white focus:outline-none focus:border-white transition-colors"
                   >
                     <option value="Rush (Within 24 Hours)" className="bg-zinc-900">Rush (Within 24 Hours)</option>
                     <option value="Standard (48 - 72 Hours)" className="bg-zinc-900">Standard (48 - 72 Hours)</option>
@@ -261,7 +279,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
 
               {/* Project Brief / Notes */}
               <div>
-                <label className="block text-xs font-mono-code text-zinc-400 uppercase mb-1">
+                <label className="block text-xs font-mono text-zinc-400 uppercase mb-1">
                   Creative Vision & Reference Links
                 </label>
                 <textarea
@@ -269,7 +287,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   placeholder="Describe desired pacing, sound references, music mood, or specific hooks you want emphasized..."
-                  className="w-full bg-black/60 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-white transition-colors resize-none"
+                  className="w-full bg-black/60 border border-white/15 rounded-xl px-3.5 py-3 text-base sm:text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-white transition-colors resize-none"
                 />
               </div>
 
@@ -278,7 +296,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                 <button
                   type="submit"
                   id="submit-project-brief-btn"
-                  className="w-full py-3.5 rounded-full bg-white text-black font-bold text-xs sm:text-sm tracking-widest uppercase hover:bg-white/90 transition-all flex items-center justify-center gap-2 shadow-xl cursor-pointer"
+                  className="w-full min-h-[44px] py-3.5 rounded-full bg-white text-black font-bold text-xs sm:text-sm tracking-widest uppercase hover:bg-white/90 active:scale-98 transition-all flex items-center justify-center gap-2 shadow-xl cursor-pointer"
                 >
                   <span>Submit Project Brief to Vivek</span>
                   <Send className="w-4 h-4" />

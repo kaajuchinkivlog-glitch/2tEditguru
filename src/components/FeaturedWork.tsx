@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Play, ArrowUpRight, Filter, Layers, Clock, Eye } from 'lucide-react';
+import { Play, ArrowUpRight, Filter, Layers, Clock, Eye, Youtube, ExternalLink } from 'lucide-react';
 import { ProjectCategory, ProjectItem } from '../types';
 import { PORTFOLIO_PROJECTS } from '../data/portfolioData';
+import { extractYouTubeId } from '../utils/youtube';
 
 interface FeaturedWorkProps {
   onSelectProject: (project: ProjectItem) => void;
@@ -10,11 +11,9 @@ interface FeaturedWorkProps {
 
 const CATEGORIES: ProjectCategory[] = [
   'All',
-  'Reels & Shorts',
-  'YouTube Videos',
-  'Gaming Edits',
   'Cinematic Videos',
-  'Vlogs',
+  'YouTube Videos',
+  'Reels & Shorts',
 ];
 
 export const FeaturedWork: React.FC<FeaturedWorkProps> = ({ onSelectProject }) => {
@@ -61,8 +60,37 @@ export const FeaturedWork: React.FC<FeaturedWorkProps> = ({ onSelectProject }) =
           transition={{ delay: 0.2 }}
           className="mt-4 text-base sm:text-lg text-white/50 font-serif italic"
         >
-          "A curated collection of cinematic edits, viral reels, and visual storytelling."
+          "A curated collection of cinematic travel films, vlogs, and reels directly from my YouTube channel."
         </motion.p>
+
+        {/* YouTube Channel Banner */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.25 }}
+          className="mt-6 inline-flex flex-wrap items-center justify-center gap-3 px-4 py-2.5 rounded-2xl bg-red-600/10 border border-red-500/30 text-white/90 text-xs sm:text-sm shadow-xl"
+        >
+          <div className="flex items-center gap-2">
+            <span className="flex items-center justify-center w-7 h-7 rounded-full bg-red-600 text-white shadow-md">
+              <Youtube className="w-4 h-4" />
+            </span>
+            <div className="text-left">
+              <span className="font-bold text-white tracking-wide">Nomad Vivek</span>
+              <span className="text-white/50 text-[11px] font-mono ml-1.5">@nomadvivek</span>
+            </div>
+          </div>
+          <div className="h-4 w-[1px] bg-white/20 hidden sm:block" />
+          <a
+            href="https://youtube.com/@nomadvivek?si=Us88ZbP9u74A2jm_"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-600 hover:bg-red-500 text-white font-medium text-xs transition-colors shadow-sm"
+          >
+            <span>Visit Channel</span>
+            <ExternalLink className="w-3 h-3" />
+          </a>
+        </motion.div>
 
         {/* Categories Navigation Bar */}
         <motion.div
@@ -70,7 +98,7 @@ export const FeaturedWork: React.FC<FeaturedWorkProps> = ({ onSelectProject }) =
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
-          className="mt-6 sm:mt-10 flex overflow-x-auto no-scrollbar sm:flex-wrap items-center justify-start sm:justify-center gap-1.5 p-1.5 rounded-2xl sm:rounded-full bg-white/5 backdrop-blur-xl border border-white/10 max-w-full sm:max-w-fit mx-auto shadow-lg"
+          className="mt-6 sm:mt-8 flex overflow-x-auto no-scrollbar sm:flex-wrap items-center justify-start sm:justify-center gap-1.5 p-1.5 rounded-2xl sm:rounded-full bg-white/5 backdrop-blur-xl border border-white/10 max-w-full sm:max-w-fit mx-auto shadow-lg"
         >
           {CATEGORIES.map((cat) => {
             const active = selectedCategory === cat;
@@ -79,7 +107,7 @@ export const FeaturedWork: React.FC<FeaturedWorkProps> = ({ onSelectProject }) =
                 key={cat}
                 id={`cat-filter-${cat.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
                 onClick={() => setSelectedCategory(cat)}
-                className={`relative px-3.5 sm:px-4 py-2 rounded-full text-xs whitespace-nowrap transition-all cursor-pointer ${
+                className={`relative px-4 py-2.5 rounded-full text-xs whitespace-nowrap transition-all cursor-pointer min-h-[38px] touch-target flex items-center justify-center ${
                   active
                     ? 'text-black font-bold uppercase tracking-wider'
                     : 'text-white/60 hover:text-white font-medium'
@@ -112,19 +140,25 @@ export const FeaturedWork: React.FC<FeaturedWorkProps> = ({ onSelectProject }) =
               transition={{ duration: 0.4, delay: index * 0.05 }}
               onMouseEnter={() => setHoveredProjectId(project.id)}
               onMouseLeave={() => setHoveredProjectId(null)}
-              className="group relative rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 hover:border-white/20 hover:bg-white/10 transition-all duration-500 overflow-hidden flex flex-col justify-between shadow-2xl cursor-pointer"
+              className="group relative rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 hover:border-white/20 hover:bg-white/10 transition-all duration-500 overflow-hidden flex flex-col justify-between shadow-2xl cursor-pointer active:scale-[0.99]"
               onClick={() => onSelectProject(project)}
             >
               {/* Glass sheen effect */}
               <div className="glass-reflection" />
 
               {/* Large Thumbnail Area with Hover Zoom */}
-              <div className="relative aspect-[16/10] w-full overflow-hidden bg-black m-2.5 rounded-2xl border border-white/10">
+              <div className="relative aspect-[16/10] w-full overflow-hidden bg-neutral-900 m-2 sm:m-2.5 rounded-2xl border border-white/10">
                 <img
                   src={project.thumbnailUrl}
                   alt={project.title}
                   className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 group-hover:brightness-95 filter contrast-105"
                   loading="lazy"
+                  decoding="async"
+                  onError={(e) => {
+                    // Fallback to a clean high-contrast dark placeholder if thumbnail fails to load
+                    const target = e.target as HTMLImageElement;
+                    target.src = 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=800&q=80';
+                  }}
                 />
 
                 {/* Gradient vignette */}
@@ -136,12 +170,20 @@ export const FeaturedWork: React.FC<FeaturedWorkProps> = ({ onSelectProject }) =
                     {project.category}
                   </span>
 
-                  {project.duration && (
-                    <span className="px-2.5 py-1 rounded-full text-[10px] font-mono-code bg-black/70 backdrop-blur-md border border-white/15 text-white/80 flex items-center gap-1">
-                      <Clock className="w-3 h-3" />
-                      {project.duration}
-                    </span>
-                  )}
+                  <div className="flex items-center gap-1.5">
+                    {extractYouTubeId(project.videoUrl || project.youtubeUrl) && (
+                      <span className="px-2 py-0.5 rounded-full text-[9px] font-mono bg-red-600/30 border border-red-500/40 text-red-300 flex items-center gap-1">
+                        <Youtube className="w-2.5 h-2.5 text-red-400" />
+                        <span>YouTube</span>
+                      </span>
+                    )}
+                    {project.duration && (
+                      <span className="px-2.5 py-1 rounded-full text-[10px] font-mono bg-black/70 backdrop-blur-md border border-white/15 text-white/80 flex items-center gap-1">
+                        <Clock className="w-3 h-3" />
+                        {project.duration}
+                      </span>
+                    )}
+                  </div>
                 </div>
 
                 {/* Floating Play Button on Hover */}

@@ -10,6 +10,10 @@ import {
   Clock,
   ArrowRight,
   Check,
+  Music,
+  Sparkles,
+  Palette,
+  Image as ImageIcon,
 } from 'lucide-react';
 import { ServiceItem } from '../types';
 import { SERVICES_LIST } from '../data/portfolioData';
@@ -21,6 +25,8 @@ interface ServicesPreviewProps {
 export const ServicesPreview: React.FC<ServicesPreviewProps> = ({ onSelectService }) => {
   const getIcon = (iconName: string) => {
     switch (iconName) {
+      case 'Music':
+        return <Music className="w-5 h-5 text-white" />;
       case 'Film':
         return <Film className="w-5 h-5 text-white" />;
       case 'Smartphone':
@@ -33,6 +39,12 @@ export const ServicesPreview: React.FC<ServicesPreviewProps> = ({ onSelectServic
         return <Clapperboard className="w-5 h-5 text-white" />;
       case 'Share2':
         return <Share2 className="w-5 h-5 text-white" />;
+      case 'Sparkles':
+        return <Sparkles className="w-5 h-5 text-white" />;
+      case 'Palette':
+        return <Palette className="w-5 h-5 text-white" />;
+      case 'Image':
+        return <ImageIcon className="w-5 h-5 text-white" />;
       default:
         return <Film className="w-5 h-5 text-white" />;
     }
@@ -138,7 +150,7 @@ export const ServicesPreview: React.FC<ServicesPreviewProps> = ({ onSelectServic
               <button
                 id={`inquire-service-${service.id}`}
                 onClick={() => onSelectService(service.title)}
-                className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-black bg-white hover:bg-white/90 px-4 py-2 rounded-full shadow-md transition-all"
+                className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-black bg-white hover:bg-white/90 active:scale-95 px-4 py-2.5 rounded-full shadow-md transition-all cursor-pointer min-h-[40px]"
               >
                 <span>Inquire</span>
                 <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />

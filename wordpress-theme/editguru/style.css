@@ -1,0 +1,102 @@
+/*
+Theme Name: EditGuru - Cinematic Portfolio
+Theme URI: https://editguru.in
+Author: Vivek
+Author URI: https://editguru.in
+Description: Premium Black & White Dark Liquid-Glass Artistic Creative Portfolio Theme for Video Editors, Filmmakers, and Visual Storytellers.
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 6.7
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: editguru
+Tags: portfolio, dark, video, filmmaker, creative, responsive-layout, custom-post-types
+*/
+
+/* Reset & Base Canvas */
+:root {
+  --bg-canvas: #050505;
+  --text-main: #ffffff;
+  --text-muted: rgba(255, 255, 255, 0.5);
+  --border-glass: rgba(255, 255, 255, 0.1);
+  --bg-glass: rgba(255, 255, 255, 0.05);
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: #050505;
+  color: #ffffff;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #050505;
+  color: #ffffff;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #080808;
+}
+::-webkit-scrollbar-thumb {
+  background: #252525;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #404040;
+}
+
+/* Glassmorphic utilities */
+.liquid-glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.liquid-glass-heavy {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.liquid-glass-input {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.liquid-glass-input:focus {
+  border-color: rgba(255, 255, 255, 0.4);
+  outline: none;
+}
+
+/* Hide scrollbar for horizontal tabs */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Font Families */
+.font-serif-italic {
+  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  font-style: italic;
+}
+
+.font-mono-code {
+  font-family: 'JetBrains Mono', monospace, monospace;
+}

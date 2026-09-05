@@ -1,314 +1,144 @@
 <?php
 /**
- * Footer Template for EditGuru Theme
+ * The Footer for EditGuru Theme
+ * EDITGURU.IN
  *
  * @package EditGuru
  */
 ?>
 
-<!-- Footer -->
-<footer class="relative mt-8 sm:mt-12 pb-10 sm:pb-12 pt-6 sm:pt-8 px-4 sm:px-6 w-full max-w-6xl mx-auto border-t border-white/10">
-    <div class="rounded-2xl sm:rounded-3xl bg-white/5 backdrop-blur-xl p-5 sm:p-10 border border-white/10 shadow-2xl">
-        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 sm:gap-6 pb-6 sm:pb-8 border-b border-white/10">
-            <!-- Brand & Tagline -->
-            <div class="flex flex-col">
-                <div class="flex items-center gap-2.5 mb-1.5 sm:mb-2">
-                    <div class="w-7 h-7 rounded-full bg-white/10 border border-white/20 flex items-center justify-center">
-                        <i data-lucide="film" class="w-3.5 h-3.5 text-white"></i>
+    <!-- Footer Section -->
+    <footer class="mt-28 border-t border-white/10 bg-black/60 backdrop-blur-xl relative overflow-hidden">
+        <div class="container mx-auto px-4 py-16">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+                <!-- Col 1: Brand Info -->
+                <div class="md:col-span-2">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center font-display font-extrabold text-white text-lg">
+                            E
+                        </div>
+                        <span class="font-display font-extrabold text-2xl text-white tracking-tight">
+                            <?php echo esc_html(get_theme_mod('editguru_logo_text', 'EDITGURU.IN')); ?>
+                        </span>
                     </div>
-                    <span class="text-lg font-bold tracking-tight text-white">
-                        EDITGURU<span class="text-white/40 font-normal">.IN</span>
+                    <p class="text-white/60 text-sm max-w-md mb-6 leading-relaxed">
+                        <?php echo esc_html(get_theme_mod('editguru_creator_title', 'Creator • Vlogger • Video Editor')); ?>. High-converting video editing, motion graphics, and cinematic visual storytelling by Vivek.
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <a href="<?php echo esc_url(get_theme_mod('editguru_instagram_url', 'https://instagram.com/editguru.in')); ?>" target="_blank" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:border-white/30 hover:bg-white/10 transition-all">
+                            <i data-lucide="instagram" class="w-4 h-4"></i>
+                        </a>
+                        <a href="<?php echo esc_url(get_theme_mod('editguru_youtube_url', 'https://youtube.com/@editguru')); ?>" target="_blank" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:border-white/30 hover:bg-white/10 transition-all">
+                            <i data-lucide="youtube" class="w-4 h-4"></i>
+                        </a>
+                        <a href="<?php echo esc_url(get_theme_mod('editguru_twitter_url', 'https://x.com/editguru_in')); ?>" target="_blank" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:border-white/30 hover:bg-white/10 transition-all">
+                            <i data-lucide="twitter" class="w-4 h-4"></i>
+                        </a>
+                        <a href="mailto:<?php echo esc_attr(get_theme_mod('editguru_contact_email', 'vivek@editguru.in')); ?>" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:border-white/30 hover:bg-white/10 transition-all">
+                            <i data-lucide="mail" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Col 2: Navigation Links -->
+                <div>
+                    <h4 class="text-xs uppercase tracking-widest text-white/40 font-mono-code mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="<?php echo esc_url(home_url('/')); ?>" class="text-white/60 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="<?php echo esc_url(home_url('/#portfolio')); ?>" class="text-white/60 hover:text-white transition-colors">Portfolio</a></li>
+                        <li><a href="<?php echo esc_url(home_url('/#services')); ?>" class="text-white/60 hover:text-white transition-colors">Services & Rates</a></li>
+                        <li><a href="<?php echo esc_url(home_url('/#journey')); ?>" class="text-white/60 hover:text-white transition-colors">About Vivek</a></li>
+                        <li><a href="<?php echo esc_url(home_url('/#testimonials')); ?>" class="text-white/60 hover:text-white transition-colors">Testimonials</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Legal & Studio -->
+                <div>
+                    <h4 class="text-xs uppercase tracking-widest text-white/40 font-mono-code mb-4">Legal & Policy</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="<?php echo esc_url(home_url('/privacy-policy')); ?>" class="text-white/60 hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="<?php echo esc_url(home_url('/terms-and-conditions')); ?>" class="text-white/60 hover:text-white transition-colors">Terms & Conditions</a></li>
+                        <li><a href="<?php echo esc_url(home_url('/cookie-policy')); ?>" class="text-white/60 hover:text-white transition-colors">Cookie Policy</a></li>
+                        <li><a href="mailto:<?php echo esc_attr(get_theme_mod('editguru_contact_email', 'vivek@editguru.in')); ?>" class="text-white/60 hover:text-white transition-colors">Support Email</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Copyright Bar -->
+            <div class="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between text-xs text-white/40 gap-4">
+                <p>&copy; <?php echo date('Y'); ?> <?php echo esc_html(get_theme_mod('editguru_logo_text', 'EDITGURU.IN')); ?>. All rights reserved. Crafted for Vivek.</p>
+                <div class="flex items-center gap-6">
+                    <span class="inline-flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span class="text-white/60 font-mono-code">Accepting Q3/Q4 Video Clients</span>
                     </span>
                 </div>
-                <div class="text-sm text-white/80 font-medium">Vivek</div>
-                <div class="text-[11px] sm:text-xs text-white/50 font-normal mt-0.5">
-                    Creator • Vlogger • Video Editor • Visual Storyteller
-                </div>
-            </div>
-
-            <!-- Social Links -->
-            <div class="flex items-center gap-2.5 sm:gap-3 self-start sm:self-auto">
-                <a
-                    href="https://youtube.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/5 border border-white/10 hover:border-white/30 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-all shadow-sm"
-                    aria-label="YouTube"
-                >
-                    <i data-lucide="youtube" class="w-4 h-4"></i>
-                </a>
-                <a
-                    href="https://instagram.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/5 border border-white/10 hover:border-white/30 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-all shadow-sm"
-                    aria-label="Instagram"
-                >
-                    <i data-lucide="instagram" class="w-4 h-4"></i>
-                </a>
-                <a
-                    href="https://linkedin.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/5 border border-white/10 hover:border-white/30 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-all shadow-sm"
-                    aria-label="LinkedIn"
-                >
-                    <i data-lucide="linkedin" class="w-4 h-4"></i>
-                </a>
-                <button
-                    type="button"
-                    class="open-contact-modal-trigger w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/5 border border-white/10 hover:border-white/30 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-all shadow-sm cursor-pointer"
-                    aria-label="Send direct message"
-                    title="Inquire With Vivek"
-                >
-                    <i data-lucide="mail" class="w-4 h-4"></i>
-                </button>
             </div>
         </div>
+    </footer>
+</div><!-- #page -->
 
-        <!-- Bottom Copyright & Back to Top -->
-        <div class="mt-5 sm:mt-6 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-[11px] sm:text-xs text-white/40 font-mono text-center sm:text-left">
-            <div>© <?php echo date('Y'); ?> EditGuru.in • All Rights Reserved.</div>
-            <div class="flex items-center gap-4 sm:gap-6">
-                <span class="text-white/40">Artistic Flair Theme</span>
-                <button
-                    id="scroll-to-top-btn"
-                    type="button"
-                    class="hover:text-white transition-colors flex items-center gap-1.5 cursor-pointer"
-                >
-                    <span>Back to top</span>
-                    <i data-lucide="arrow-up" class="w-3.5 h-3.5"></i>
-                </button>
-            </div>
+<!-- Video Preview Modal -->
+<div id="video-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-2xl">
+    <div class="relative w-full max-w-5xl liquid-glass-heavy rounded-2xl p-4 overflow-hidden border border-white/20">
+        <button onclick="closeVideoModal()" class="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-black/60 border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all">
+            <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+        <div id="video-modal-content" class="aspect-video w-full rounded-xl overflow-hidden bg-black flex items-center justify-center">
+            <!-- Video Player loaded dynamically -->
         </div>
-    </div>
-</footer>
-
-<!-- Project Video Showcase Modal -->
-<div id="project-modal" class="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-6 bg-black/85 backdrop-blur-2xl overflow-y-auto hidden opacity-0 transition-opacity duration-300">
-    <div class="relative w-full max-w-4xl max-h-[94vh] overflow-y-auto bg-neutral-950/95 backdrop-blur-2xl border border-white/10 rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-2xl">
-        <!-- Header Bar -->
-        <div class="flex items-center justify-between pb-3 sm:pb-4 border-b border-white/10 mb-4 sm:mb-5">
-            <div class="flex items-center gap-2 sm:gap-3">
-                <span id="modal-project-category" class="px-2.5 sm:px-3 py-1 rounded-full text-[9px] sm:text-[10px] font-mono uppercase bg-white/10 text-white border border-white/15">
-                    Cinematic
-                </span>
-                <span id="modal-project-client" class="text-[11px] sm:text-xs text-white/50 hidden sm:inline">
-                    Client: <strong class="text-white font-medium" id="modal-project-client-name">RedBull</strong>
-                </span>
+        <div class="p-4 flex items-center justify-between border-t border-white/10 mt-4">
+            <div>
+                <h3 id="modal-video-title" class="text-lg font-bold text-white">Project Preview</h3>
+                <p id="modal-video-client" class="text-xs text-white/50 font-mono-code">Client / Brand</p>
             </div>
-            <button
-                id="close-project-modal-btn"
-                type="button"
-                class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/5 border border-white/10 hover:border-white/30 flex items-center justify-center text-white/50 hover:text-white transition-colors cursor-pointer"
-            >
-                <i data-lucide="x" class="w-4 h-4"></i>
-            </button>
-        </div>
-
-        <!-- Main Video Presentation -->
-        <div class="relative aspect-video w-full rounded-xl sm:rounded-2xl overflow-hidden bg-black border border-white/15 shadow-2xl group">
-            <video
-                id="modal-video-element"
-                src=""
-                class="w-full h-full object-cover transition-all duration-500"
-                playsinline
-                loop
-            ></video>
-
-            <!-- Raw Ungraded Tag indicator -->
-            <div id="modal-ungraded-tag" class="hidden absolute top-3 sm:top-4 left-3 sm:left-4 z-20 px-2.5 py-0.5 sm:py-1 rounded-md bg-black/80 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs font-mono text-zinc-300">
-                RAW UNGRADED LOG
-            </div>
-
-            <!-- Video Controls Overlay -->
-            <div class="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 right-3 sm:right-4 flex items-center justify-between z-20">
-                <div class="flex items-center gap-1.5 sm:gap-2">
-                    <button
-                        id="modal-play-btn"
-                        type="button"
-                        class="w-8 h-8 sm:w-10 sm:h-10 rounded-full liquid-glass border border-white/30 text-white flex items-center justify-center hover:scale-105 transition-all shadow-md cursor-pointer"
-                    >
-                        <i data-lucide="play" class="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white translate-x-0.5" id="modal-play-icon"></i>
-                    </button>
-                    <button
-                        id="modal-mute-btn"
-                        type="button"
-                        class="w-8 h-8 sm:w-10 sm:h-10 rounded-full liquid-glass border border-white/30 text-white flex items-center justify-center hover:scale-105 transition-all shadow-md cursor-pointer"
-                    >
-                        <i data-lucide="volume-2" class="w-3.5 h-3.5 sm:w-4 sm:h-4" id="modal-mute-icon"></i>
-                    </button>
-                </div>
-
-                <button
-                    id="modal-grade-toggle-btn"
-                    type="button"
-                    class="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-mono transition-all border bg-white/20 border-white/40 text-white font-medium shadow-md cursor-pointer"
-                >
-                    <i data-lucide="sliders" class="w-3 h-3 sm:w-3.5 sm:h-3.5"></i>
-                    <span id="modal-grade-label">Graded</span>
-                </button>
-            </div>
-        </div>
-
-        <!-- Project Details -->
-        <div class="mt-4 sm:mt-6">
-            <h2 id="modal-project-title" class="font-bold text-xl sm:text-3xl text-white">
-                Project Title
-            </h2>
-            <p id="modal-project-desc" class="mt-2 sm:mt-3 text-xs sm:text-base text-zinc-300 font-light leading-relaxed">
-                Project description goes here...
-            </p>
-
-            <!-- Specifications Grid -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 mt-4 sm:mt-6 p-3 sm:p-4 rounded-2xl bg-white/[0.02] border border-white/[0.08]">
-                <div>
-                    <span class="text-[9px] sm:text-[10px] font-mono uppercase text-zinc-500 block">Resolution</span>
-                    <span id="modal-project-res" class="text-xs sm:text-sm font-semibold text-white">4K UHD</span>
-                </div>
-                <div>
-                    <span class="text-[9px] sm:text-[10px] font-mono uppercase text-zinc-500 block">Frame Rate</span>
-                    <span id="modal-project-fps" class="text-xs sm:text-sm font-semibold text-white">60 FPS</span>
-                </div>
-                <div>
-                    <span class="text-[9px] sm:text-[10px] font-mono uppercase text-zinc-500 block">Duration</span>
-                    <span id="modal-project-duration" class="text-xs sm:text-sm font-semibold text-white">01:45</span>
-                </div>
-                <div>
-                    <span class="text-[9px] sm:text-[10px] font-mono uppercase text-zinc-500 block">Primary Tool</span>
-                    <span id="modal-project-tool" class="text-xs sm:text-sm font-semibold text-white">DaVinci Resolve</span>
-                </div>
-            </div>
-
-            <!-- Pipeline & Action CTA -->
-            <div class="mt-5 sm:mt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-white/[0.08]">
-                <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                    <span class="text-[11px] sm:text-xs text-zinc-400 font-mono">Pipeline:</span>
-                    <div id="modal-project-software" class="flex flex-wrap gap-1.5">
-                        <!-- badges injected via js -->
-                    </div>
-                </div>
-
-                <button
-                    id="modal-inquire-similar-btn"
-                    type="button"
-                    class="w-full sm:w-auto px-5 sm:px-6 py-3 rounded-full bg-white text-black font-bold text-xs sm:text-sm tracking-widest uppercase hover:bg-white/90 transition-all flex items-center justify-center gap-2 shadow-xl cursor-pointer"
-                >
-                    <span>Inquire About Similar Edit</span>
-                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </button>
-            </div>
+            <button onclick="closeVideoModal()" class="px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-semibold">Close Preview</button>
         </div>
     </div>
 </div>
 
-<!-- Contact Ingestion Modal -->
-<div id="contact-modal" class="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-6 bg-black/85 backdrop-blur-2xl overflow-y-auto hidden opacity-0 transition-opacity duration-300">
-    <div class="relative w-full max-w-xl max-h-[94vh] overflow-y-auto bg-neutral-950/95 backdrop-blur-2xl border border-white/10 rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-2xl">
-        <!-- Header -->
-        <div class="flex items-center justify-between pb-3 sm:pb-4 border-b border-white/10 mb-4 sm:mb-6">
-            <div class="flex items-center gap-2.5">
-                <div class="w-8 h-8 rounded-full bg-white/10 border border-white/20 flex items-center justify-center">
-                    <i data-lucide="film" class="w-4 h-4 text-white"></i>
-                </div>
-                <div>
-                    <h3 class="font-medium text-base sm:text-lg text-white">Start a Project with Vivek</h3>
-                    <p class="text-[11px] sm:text-xs text-white/50 font-normal">EditGuru.in • Direct Ingestion</p>
-                </div>
-            </div>
-            <button
-                id="close-contact-modal-btn"
-                type="button"
-                class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/5 border border-white/10 hover:border-white/30 flex items-center justify-center text-white/50 hover:text-white transition-colors cursor-pointer"
-            >
-                <i data-lucide="x" class="w-4 h-4"></i>
-            </button>
-        </div>
+<!-- Project Contact Modal -->
+<div id="contact-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-2xl">
+    <div class="relative w-full max-w-xl liquid-glass-heavy rounded-3xl p-8 border border-white/20 shadow-2xl">
+        <button onclick="closeContactModal()" class="absolute top-6 right-6 w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all">
+            <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
 
-        <!-- Contact Form -->
-        <form id="editguru-contact-form" class="space-y-4">
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+        <h3 class="text-2xl font-bold text-white mb-1">Start Your Project</h3>
+        <p class="text-sm text-white/60 mb-6">Let's build a viral video experience with Vivek at EDITGURU.IN.</p>
+
+        <form id="modal-contact-form" class="space-y-4">
+            <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-[11px] font-mono text-white/60 uppercase mb-1.5">Your Name *</label>
-                    <input
-                        type="text"
-                        name="name"
-                        required
-                        placeholder="Alex Parker"
-                        class="w-full bg-white/5 border border-white/15 focus:border-white/40 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-white/20 focus:outline-none transition-all"
-                    >
+                    <label class="block text-xs font-mono-code text-white/60 mb-1">YOUR NAME *</label>
+                    <input type="text" name="name" required placeholder="John Doe" class="liquid-glass-input text-sm">
                 </div>
                 <div>
-                    <label class="block text-[11px] font-mono text-white/60 uppercase mb-1.5">Your Email *</label>
-                    <input
-                        type="email"
-                        name="email"
-                        required
-                        placeholder="alex@brand.com"
-                        class="w-full bg-white/5 border border-white/15 focus:border-white/40 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-white/20 focus:outline-none transition-all"
-                    >
+                    <label class="block text-xs font-mono-code text-white/60 mb-1">EMAIL ADDRESS *</label>
+                    <input type="email" name="email" required placeholder="john@brand.com" class="liquid-glass-input text-sm">
                 </div>
             </div>
 
             <div>
-                <label class="block text-[11px] font-mono text-white/60 uppercase mb-1.5">Project Type</label>
-                <select
-                    name="projectType"
-                    class="w-full bg-neutral-900 border border-white/15 focus:border-white/40 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none transition-all cursor-pointer"
-                >
-                    <option value="Cinematic Commercial">Cinematic Commercial</option>
-                    <option value="Reels & TikToks (Batch)">Reels & TikToks (Batch Package)</option>
-                    <option value="YouTube Long-Form / Vlog">YouTube Long-Form / Vlog Story</option>
-                    <option value="Color Grading & Master">Color Grading & Finishing</option>
-                    <option value="Motion Graphics & Sound FX">Motion Graphics & Sound FX</option>
-                    <option value="Full Retainer / Channel Partnership">Full Retainer / Channel Partnership</option>
+                <label class="block text-xs font-mono-code text-white/60 mb-1">PROJECT TYPE</label>
+                <select name="projectType" class="liquid-glass-input text-sm bg-black text-white">
+                    <option value="Reels / Shorts Editing">Reels & Shorts Editing</option>
+                    <option value="YouTube Long-Form Documentaries">YouTube Long-Form / Docs</option>
+                    <option value="Commercial & Brand Ad">Commercial & Brand Ad</option>
+                    <option value="Color Grading & Finishing">Color Grading & Finishing</option>
+                    <option value="Motion Graphics & 3D">Motion Graphics & 3D VFX</option>
                 </select>
             </div>
 
             <div>
-                <label class="block text-[11px] font-mono text-white/60 uppercase mb-1.5">Estimated Budget (USD)</label>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="budget-options">
-                    <label class="cursor-pointer border border-white/15 hover:border-white/30 rounded-xl p-2 text-center text-xs text-white/80 block select-none has-[:checked]:bg-white has-[:checked]:text-black has-[:checked]:font-bold transition-all">
-                        <input type="radio" name="budget" value="< $500" class="sr-only">
-                        &lt; $500
-                    </label>
-                    <label class="cursor-pointer border border-white/15 hover:border-white/30 rounded-xl p-2 text-center text-xs text-white/80 block select-none has-[:checked]:bg-white has-[:checked]:text-black has-[:checked]:font-bold transition-all">
-                        <input type="radio" name="budget" value="$500 - $1,500" checked class="sr-only">
-                        $500 - $1.5K
-                    </label>
-                    <label class="cursor-pointer border border-white/15 hover:border-white/30 rounded-xl p-2 text-center text-xs text-white/80 block select-none has-[:checked]:bg-white has-[:checked]:text-black has-[:checked]:font-bold transition-all">
-                        <input type="radio" name="budget" value="$1,500 - $3,500" class="sr-only">
-                        $1.5K - $3.5K
-                    </label>
-                    <label class="cursor-pointer border border-white/15 hover:border-white/30 rounded-xl p-2 text-center text-xs text-white/80 block select-none has-[:checked]:bg-white has-[:checked]:text-black has-[:checked]:font-bold transition-all">
-                        <input type="radio" name="budget" value="$3,500+" class="sr-only">
-                        $3.5K+
-                    </label>
-                </div>
+                <label class="block text-xs font-mono-code text-white/60 mb-1">PROJECT DETAILS / GOALS *</label>
+                <textarea name="message" rows="3" required placeholder="Tell Vivek about your raw footage, timeline, and goals..." class="liquid-glass-input text-sm"></textarea>
             </div>
 
-            <div>
-                <label class="block text-[11px] font-mono text-white/60 uppercase mb-1.5">Project Brief & Details *</label>
-                <textarea
-                    id="contact-form-message"
-                    name="message"
-                    required
-                    rows="3"
-                    placeholder="Tell me about your footage, deadlines, references, or links to rushes..."
-                    class="w-full bg-white/5 border border-white/15 focus:border-white/40 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-white/20 focus:outline-none transition-all resize-none"
-                ></textarea>
-            </div>
+            <div id="modal-form-status" class="hidden text-sm p-3 rounded-xl"></div>
 
-            <!-- Status message container -->
-            <div id="contact-form-status" class="hidden text-xs py-2 px-3 rounded-lg border"></div>
-
-            <button
-                type="submit"
-                id="contact-form-submit-btn"
-                class="w-full py-3.5 rounded-full bg-white text-black font-bold text-xs uppercase tracking-widest hover:bg-white/90 transition-all flex items-center justify-center gap-2 shadow-xl cursor-pointer"
-            >
-                <span id="submit-btn-text">Transmit Project Brief</span>
-                <i data-lucide="send" class="w-3.5 h-3.5"></i>
+            <button type="submit" class="w-full py-4 rounded-full bg-white text-black font-bold text-sm uppercase tracking-wider hover:bg-white/90 transition-all shadow-[0_0_25px_rgba(255,255,255,0.4)]">
+                Submit Project Inquiry
             </button>
         </form>
     </div>

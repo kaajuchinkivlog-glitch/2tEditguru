@@ -1,28 +1,31 @@
 <?php
 /**
- * Page Template for EditGuru Theme
+ * The Default Page Template for EditGuru Theme
+ * EDITGURU.IN
  *
  * @package EditGuru
  */
 
 get_header();
-
-while (have_posts()) : the_post();
 ?>
 
-<main class="pt-28 sm:pt-36 pb-20 px-4 sm:px-6 w-full max-w-4xl mx-auto">
-    <div class="p-6 sm:p-12 rounded-3xl bg-white/5 border border-white/10 shadow-2xl backdrop-blur-xl">
-        <h1 class="text-3xl sm:text-5xl font-light uppercase tracking-tight text-white mb-8 border-b border-white/10 pb-6">
-            <?php the_title(); ?>
-        </h1>
+<main id="primary" class="site-main py-16 container mx-auto px-4">
 
-        <div class="prose prose-invert max-w-none text-white/70 leading-relaxed space-y-4">
+    <?php while (have_posts()) : the_post(); ?>
+
+    <article id="post-<?php the_ID(); ?>" <?php post_class('max-w-4xl mx-auto space-y-8'); ?>>
+        <header class="text-center space-y-3">
+            <h1 class="font-display font-extrabold text-3xl sm:text-5xl text-white"><?php the_title(); ?></h1>
+        </header>
+
+        <div class="liquid-glass rounded-3xl p-8 md:p-12 border border-white/10 text-white/80 space-y-6 leading-relaxed">
             <?php the_content(); ?>
         </div>
-    </div>
+    </article>
+
+    <?php endwhile; ?>
+
 </main>
 
 <?php
-endwhile;
-
 get_footer();

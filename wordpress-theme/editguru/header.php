@@ -1,112 +1,88 @@
 <?php
 /**
- * Header Template for EditGuru Theme
+ * The Header for EditGuru Theme
+ * EDITGURU.IN
  *
  * @package EditGuru
  */
-?><!DOCTYPE html>
-<html <?php language_attributes(); ?> class="scroll-smooth bg-[#050505]">
+?>
+<!DOCTYPE html>
+<html <?php language_attributes(); ?>>
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="profile" href="https://gmpg.org/xfn/11">
-    
-    <!-- Tailwind CSS CDN for instant styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                        serif: ['Cormorant Garamond', 'Playfair Display', 'Georgia', 'serif'],
-                        display: ['Syne', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace'],
-                    },
-                    colors: {
-                        canvas: '#050505',
-                    }
-                }
-            }
-        }
-    </script>
-
     <?php wp_head(); ?>
 </head>
-<body <?php body_class('bg-[#050505] text-white selection:bg-white selection:text-black min-h-screen'); ?>>
+<body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
-<!-- Thin Animated Top Scroll Progress Bar -->
-<div id="scroll-progress-container" class="fixed top-0 left-0 right-0 z-[60] pointer-events-none" role="progressbar" aria-label="Page reading and scroll progress">
-    <div class="absolute top-0 left-0 right-0 h-[2.5px] bg-white/[0.04] backdrop-blur-[2px]"></div>
-    <div id="scroll-progress-bar" class="relative h-[2.5px] w-0 bg-gradient-to-r from-white/40 via-white/90 to-white shadow-[0_0_10px_rgba(255,255,255,0.7),0_0_20px_rgba(255,255,255,0.3)] transition-all duration-75 ease-out">
-        <div class="absolute top-1/2 right-0 -translate-y-1/2 w-4 h-4 bg-white/60 rounded-full blur-[3px] pointer-events-none opacity-80"></div>
-        <div class="absolute top-1/2 right-0 -translate-y-1/2 w-1.5 h-1.5 bg-white rounded-full pointer-events-none"></div>
-    </div>
-</div>
+<div id="page" class="site">
+    <!-- Header Navigation -->
+    <header id="masthead" class="site-header fixed top-0 left-0 right-0 z-50 transition-all duration-300" style="padding: 16px 0;">
+        <div class="container mx-auto px-4">
+            <div class="liquid-glass rounded-full px-6 py-3 flex items-center justify-between border border-white/10 backdrop-blur-xl bg-black/40">
+                <!-- Brand Logo -->
+                <a href="<?php echo esc_url(home_url('/')); ?>" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center font-display font-extrabold text-white text-lg group-hover:border-white/50 transition-all shadow-inner">
+                        E
+                    </div>
+                    <div>
+                        <span class="font-display font-extrabold text-lg text-white tracking-tight group-hover:text-white/90 transition-colors">
+                            <?php echo esc_html(get_theme_mod('editguru_logo_text', 'EDITGURU.IN')); ?>
+                        </span>
+                        <span class="block text-[10px] uppercase tracking-widest text-white/50 font-mono-code -mt-1">
+                            <?php echo esc_html(get_theme_mod('editguru_creator_name', 'Vivek')); ?> • Studio
+                        </span>
+                    </div>
+                </a>
 
-<!-- Sticky Liquid Glass Navigation -->
-<header id="site-navigation-header" class="fixed top-3 sm:top-6 left-0 right-0 z-50 flex justify-center px-3 sm:px-6 pointer-events-none">
-    <nav class="pointer-events-auto w-full max-w-5xl transition-all duration-300 rounded-full px-4 sm:px-8 py-2.5 sm:py-3 flex items-center justify-between shadow-2xl bg-white/5 border border-white/10 backdrop-blur-xl" id="main-nav-pill">
-        <!-- Logo -->
-        <a href="<?php echo esc_url(home_url('/')); ?>" class="flex items-center group cursor-pointer">
-            <div class="flex items-center text-base sm:text-xl font-bold tracking-tighter text-white">
-                EDITGURU<span class="text-white/40 font-normal">.IN</span>
+                <!-- Desktop Nav Menu -->
+                <nav class="hidden md:flex items-center gap-8">
+                    <?php
+                    if (has_nav_menu('primary')) {
+                        wp_nav_menu(array(
+                            'theme_location' => 'primary',
+                            'container'      => false,
+                            'menu_class'     => 'flex items-center gap-6 text-sm font-medium text-white/70 hover:text-white transition-colors',
+                            'fallback_cb'    => false,
+                        ));
+                    } else {
+                    ?>
+                    <a href="<?php echo esc_url(home_url('/')); ?>" class="text-sm font-medium text-white/80 hover:text-white transition-colors">Home</a>
+                    <a href="<?php echo esc_url(home_url('/#portfolio')); ?>" class="text-sm font-medium text-white/70 hover:text-white transition-colors">Portfolio</a>
+                    <a href="<?php echo esc_url(home_url('/#services')); ?>" class="text-sm font-medium text-white/70 hover:text-white transition-colors">Services</a>
+                    <a href="<?php echo esc_url(home_url('/#journey')); ?>" class="text-sm font-medium text-white/70 hover:text-white transition-colors">About Vivek</a>
+                    <a href="<?php echo esc_url(home_url('/#testimonials')); ?>" class="text-sm font-medium text-white/70 hover:text-white transition-colors">Reviews</a>
+                    <a href="<?php echo esc_url(home_url('/#contact')); ?>" class="text-sm font-medium text-white/70 hover:text-white transition-colors">Contact</a>
+                    <?php } ?>
+                </nav>
+
+                <!-- CTA Action Button & Mobile Menu Toggle -->
+                <div class="flex items-center gap-3">
+                    <button onclick="openContactModal()" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-black font-semibold text-xs uppercase tracking-wider hover:bg-white/90 transition-all shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:scale-105 active:scale-95 cursor-pointer">
+                        <span>Start a Project</span>
+                        <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                    </button>
+
+                    <!-- Mobile Menu Button -->
+                    <button id="mobile-menu-toggle" class="md:hidden p-2 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors" aria-label="Toggle Menu">
+                        <i data-lucide="menu" class="w-5 h-5"></i>
+                    </button>
+                </div>
             </div>
-        </a>
-
-        <!-- Desktop Navigation Items -->
-        <div class="hidden md:flex items-center gap-7 text-xs uppercase tracking-widest text-white/70">
-            <a href="#work" class="hover:text-white transition-colors">Selected Work</a>
-            <a href="#stats" class="hover:text-white transition-colors">Stats</a>
-            <a href="#about" class="hover:text-white transition-colors">About</a>
-            <a href="#services" class="hover:text-white transition-colors">Services</a>
         </div>
 
-        <!-- Right Action Controls -->
-        <div class="flex items-center gap-2 sm:gap-3">
-            <!-- Let's Work Together CTA (Desktop) -->
-            <button
-                type="button"
-                class="open-contact-modal-trigger hidden sm:flex relative group overflow-hidden px-4 sm:px-5 py-2 rounded-full bg-white text-black text-xs font-bold hover:bg-white/90 uppercase tracking-widest transition-all shadow-lg items-center gap-1.5 cursor-pointer"
-            >
-                <span>Let's Work Together</span>
-                <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
-            </button>
-
-            <!-- Mobile Hamburger Button -->
-            <button
-                id="mobile-menu-btn"
-                type="button"
-                aria-label="Toggle navigation menu"
-                class="md:hidden w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white cursor-pointer"
-            >
-                <i data-lucide="menu" class="w-4 h-4" id="mobile-menu-icon"></i>
+        <!-- Mobile Drawer Navigation -->
+        <div id="mobile-drawer" class="hidden md:hidden fixed inset-x-4 top-24 p-6 rounded-2xl liquid-glass-heavy border border-white/20 bg-black/90 backdrop-blur-2xl z-50 flex-col gap-4">
+            <a href="<?php echo esc_url(home_url('/')); ?>" class="text-base font-medium text-white hover:text-white/80 py-2 border-b border-white/10">Home</a>
+            <a href="<?php echo esc_url(home_url('/#portfolio')); ?>" class="text-base font-medium text-white/80 hover:text-white py-2 border-b border-white/10">Portfolio Work</a>
+            <a href="<?php echo esc_url(home_url('/#services')); ?>" class="text-base font-medium text-white/80 hover:text-white py-2 border-b border-white/10">Services & Rates</a>
+            <a href="<?php echo esc_url(home_url('/#journey')); ?>" class="text-base font-medium text-white/80 hover:text-white py-2 border-b border-white/10">About Vivek</a>
+            <a href="<?php echo esc_url(home_url('/#contact')); ?>" class="text-base font-medium text-white/80 hover:text-white py-2">Contact Studio</a>
+            <button onclick="openContactModal()" class="w-full mt-4 py-3 rounded-full bg-white text-black font-bold text-sm uppercase tracking-wider text-center">
+                Start a Project
             </button>
         </div>
-    </nav>
-</header>
-
-<!-- Mobile Navigation Drawer -->
-<div id="mobile-nav-drawer" class="fixed inset-0 z-40 bg-black/95 backdrop-blur-2xl px-6 pt-24 pb-12 flex flex-col justify-between transition-all duration-300 pointer-events-none opacity-0 translate-y-[-10px]">
-    <div class="flex flex-col gap-6 text-xl tracking-tight uppercase font-light text-center mt-6">
-        <a href="#work" class="mobile-nav-link text-white/70 hover:text-white py-2">Selected Work</a>
-        <a href="#stats" class="mobile-nav-link text-white/70 hover:text-white py-2">Stats & Metrics</a>
-        <a href="#about" class="mobile-nav-link text-white/70 hover:text-white py-2">About Vivek</a>
-        <a href="#services" class="mobile-nav-link text-white/70 hover:text-white py-2">Services</a>
-    </div>
-
-    <div class="flex flex-col gap-4">
-        <button
-            type="button"
-            class="open-contact-modal-trigger w-full py-3.5 rounded-full bg-white text-black font-bold text-xs tracking-widest uppercase flex items-center justify-center gap-2 shadow-xl"
-        >
-            <span>Let's Work Together</span>
-            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-        </button>
-
-        <div class="text-center text-[10px] text-white/40 font-mono tracking-widest uppercase">
-            EditGuru.in • Vivek Portfolio
-        </div>
-    </div>
-</div>
+    </header>
+    <div class="pt-24"></div>

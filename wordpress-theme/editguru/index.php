@@ -1,6 +1,7 @@
 <?php
 /**
- * Main Index Template for EditGuru Theme
+ * The Main Index / Blog Listing Template for EditGuru Theme
+ * EDITGURU.IN
  *
  * @package EditGuru
  */
@@ -8,46 +9,62 @@
 get_header();
 ?>
 
-<main class="pt-28 sm:pt-36 pb-20 px-4 sm:px-6 w-full max-w-5xl mx-auto">
-    <div class="text-center mb-12">
-        <h1 class="text-3xl sm:text-5xl font-light uppercase tracking-tight text-white">
-            <?php single_post_title(); ?>
-        </h1>
+<main id="primary" class="site-main py-16 container mx-auto px-4">
+
+    <!-- Header Section -->
+    <div class="max-w-3xl mb-12">
+        <span class="text-xs font-mono-code uppercase tracking-widest text-white/50 block mb-2">EDITGURU Journal</span>
+        <h1 class="font-display font-extrabold text-3xl sm:text-5xl text-white">Editing Tips, Tutorials & Insights</h1>
+        <p class="text-sm text-white/60 mt-3">Behind the scenes workflows, DaVinci color grading secrets, and video trend analysis by Vivek.</p>
     </div>
 
-    <?php if (have_posts()) : ?>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <?php while (have_posts()) : the_post(); ?>
-                <article class="p-6 rounded-3xl bg-white/5 border border-white/10 hover:border-white/20 transition-all flex flex-col justify-between">
+    <!-- Blog Categories Nav -->
+    <div class="flex items-center gap-3 overflow-x-auto no-scrollbar pb-6 mb-8 border-b border-white/10">
+        <span class="text-xs font-mono-code text-white/40 uppercase">Categories:</span>
+        <a href="<?php echo esc_url(get_permalink(get_option('page_for_posts'))); ?>" class="px-4 py-1.5 rounded-full text-xs font-semibold bg-white text-black">All Posts</a>
+        <?php
+        $categories = get_categories(array('taxonomy' => 'category', 'hide_empty' => false));
+        foreach ($categories as $cat) {
+            echo '<a href="' . esc_url(get_category_link($cat->term_id)) . '" class="px-4 py-1.5 rounded-full text-xs font-semibold bg-white/10 text-white/70 hover:bg-white/20 hover:text-white transition-all">' . esc_html($cat->name) . '</a>';
+        }
+        ?>
+    </div>
+
+    <!-- Blog Feed Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <?php if (have_posts()) : ?>
+            <?php while (have_posts()) : the_post();
+                $thumb = get_the_post_thumbnail_url(get_the_ID(), 'medium_large');
+                if (!$thumb) {
+                    $thumb = 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=800&q=80';
+                }
+            ?>
+                <article id="post-<?php the_ID(); ?>" <?php post_class('liquid-glass rounded-3xl overflow-hidden border border-white/10 hover:border-white/30 transition-all group flex flex-col justify-between'); ?>>
                     <div>
-                        <div class="text-[11px] font-mono text-white/40 mb-2"><?php echo get_the_date(); ?></div>
-                        <h2 class="text-xl font-bold text-white mb-2">
-                            <a href="<?php the_permalink(); ?>" class="hover:text-white/80 transition-colors">
-                                <?php the_title(); ?>
-                            </a>
-                        </h2>
-                        <p class="text-xs sm:text-sm text-white/50 line-clamp-3 leading-relaxed mb-4">
-                            <?php echo get_the_excerpt(); ?>
-                        </p>
+                        <div class="aspect-video relative overflow-hidden bg-black">
+                            <img src="<?php echo esc_url($thumb); ?>" alt="<?php the_title_attribute(); ?>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <span class="text-[10px] font-mono-code text-white/50 uppercase tracking-widest block"><?php echo get_the_date(); ?></span>
+                            <h2 class="text-xl font-bold text-white group-hover:text-white/90 transition-colors">
+                                <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+                            </h2>
+                            <p class="text-xs text-white/60 line-clamp-3"><?php echo get_the_excerpt(); ?></p>
+                        </div>
                     </div>
-                    <div>
-                        <a href="<?php the_permalink(); ?>" class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-white">
-                            <span>Read More</span>
-                            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
-                        </a>
+                    <div class="px-6 pb-6 pt-2 border-t border-white/10 flex items-center justify-between text-xs font-mono-code text-white/50">
+                        <span>By Vivek</span>
+                        <a href="<?php the_permalink(); ?>" class="text-white hover:underline flex items-center gap-1">Read Article →</a>
                     </div>
                 </article>
             <?php endwhile; ?>
-        </div>
+        <?php else : ?>
+            <div class="col-span-full text-center py-16 liquid-glass rounded-3xl p-8 border border-white/10">
+                <p class="text-white/60">No blog articles found. Add posts in WP Admin > Posts.</p>
+            </div>
+        <?php endif; ?>
+    </div>
 
-        <div class="mt-8 flex justify-center">
-            <?php the_posts_pagination(array('mid_size' => 2)); ?>
-        </div>
-    <?php else : ?>
-        <div class="text-center py-16 text-white/40">
-            <p>No content found. Return to <a href="<?php echo esc_url(home_url('/')); ?>" class="text-white underline">Homepage</a>.</p>
-        </div>
-    <?php endif; ?>
 </main>
 
 <?php
